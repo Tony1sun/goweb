@@ -1,13 +1,15 @@
 package dao
 
 import (
+	"bookstore/model"
 	"fmt"
 	"testing"
 )
 
 func TestBook(t *testing.T) {
 	fmt.Println("测试bookdao中的方法")
-	t.Run("书籍列表:", testgetBook)
+	// t.Run("书籍列表:", testgetBook)
+	t.Run("添加图书:", testAddBook)
 }
 
 func testgetBook(t *testing.T) {
@@ -16,4 +18,17 @@ func testgetBook(t *testing.T) {
 	for k, v := range books {
 		fmt.Printf("第%d本图书的信息是: %v\n", k+1, v)
 	}
+}
+
+func testAddBook(t *testing.T) {
+	book := &model.Book{
+		Title:   "三国演义",
+		Author:  "罗贯中",
+		Price:   88.88,
+		Sales:   100,
+		Stock:   100,
+		ImgPath: "/static/img/default.jpg",
+	}
+	// 调用添加图书函数
+	AddBook(book)
 }
