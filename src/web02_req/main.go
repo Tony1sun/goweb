@@ -22,10 +22,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintln(w, "请求体中的内容有:", string(body))
 
 	// 解析表单,在调用r.Form之前必须执行该操作
-	r.ParseForm()
+	//r.ParseForm()
 	// 获取请求参数
-	fmt.Fprintln(w, "请求参数有:", r.Form)
-	fmt.Fprintln(w, "POST请求的form表单中的请求参数有:", r.PostForm)
+	//fmt.Fprintln(w, "请求参数有:", r.Form)
+	//fmt.Fprintln(w, "POST请求的form表单中的请求参数有:", r.PostForm)
+
+	// 通过直接调用FromValue方法和PostFromValue方法直接获取请求参数的值
+	fmt.Fprintln(w, "URL中user请求参数的值是:", r.FormValue("user"))
+	fmt.Fprintln(w, "Form表单中username请求参数的值是:", r.PostFormValue("usename"))
+
 }
 
 func main() {

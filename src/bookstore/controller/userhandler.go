@@ -46,3 +46,18 @@ func Regist(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, "")
 	}
 }
+
+func CheckUserName(w http.ResponseWriter, r *http.Request) {
+	// 获取用户名
+	username := r.PostFormValue("username")
+	fmt.Println("传入的用户名是：", username)
+	// 验证用户名
+	user, _ := dao.CheckUserName(username)
+	if user.ID > 0 {
+		// 用户名已经存在
+		w.Write([]byte("用户名已存在！"))
+	} else {
+		// 用户名可用
+		w.Write([]byte("用户名可用！"))
+	}
+}

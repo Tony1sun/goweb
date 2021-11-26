@@ -27,7 +27,7 @@
 			<img class="logo_img" alt="" src="/static/img/logo.gif" >
 			<span class="wel_word">图书管理系统</span>
 			<div>
-				<span>管理员</span>
+				<span>管理员<span class="um_span">{{.Username}}</span>
 				<a href="/getPageBooks?PageNo=1">图书管理</a>
 				<a href="/getOrders">订单管理</a>
 				<a href="/main">返回商城</a>
@@ -46,20 +46,20 @@
 			</tr>	
 		{{range .}}
 			<tr>
-				<td>{{.Title}}</td>
+				<!-- <td>{{.Title}}</td>
 				<td>{{.Price}}</td>
 				<td>{{.Author}}</td>
 				<td>{{.Sales}}</td>
 				<td>{{.Stock}}</td>
 				<td><a href="/toUpdateBookPage?bookId={{.ID}}">修改</a></td>
-				<td><a id="{{.Title}}" class="deleteBook" href="/deleteBook?bookId={{.ID}}">删除</a></td>
-				<!-- <td>时间简史</td>
+				<td><a id="{{.Title}}" class="deleteBook" href="/deleteBook?bookId={{.ID}}">删除</a></td> -->
+				<td>时间简史</td>
 				<td>20.00</td>
 				<td>霍金</td>
 				<td>200</td>
 				<td>400</td>
 				<td><a href="/pages/manager/book_edit.htmls">修改</a></td>
-				<td><a href="#">删除</a></td> -->
+				<td><a href="#">删除</a></td>
 			</tr>	
 		{{end}}
 			<tr>
