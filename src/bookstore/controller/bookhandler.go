@@ -19,19 +19,83 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 // 添加图书
-func AddBook(w http.ResponseWriter, r *http.Request) {
+// func AddBook(w http.ResponseWriter, r *http.Request) {
+// 	// 获取图书信息
+// 	title := r.PostFormValue("title")
+// 	author := r.PostFormValue("author")
+// 	price := r.PostFormValue("price")
+// 	sales := r.PostFormValue("sales")
+// 	stock := r.PostFormValue("stock")
+// 	// 把价格、销量和库存进行转换
+// 	fPrice, _ := strconv.ParseFloat(price, 64)
+// 	iSales, _ := strconv.ParseInt(sales, 10, 0)
+// 	iStock, _ := strconv.ParseInt(stock, 10, 0)
+// 	// 创建Book
+// 	book := &model.Book{
+// 		Title:   title,
+// 		Author:  author,
+// 		Price:   fPrice,
+// 		Sales:   int(iSales),
+// 		Stock:   int(iStock),
+// 		ImgPath: "/static/img/default.jpg",
+// 	}
+// 	// 调用添加图书函数
+// 	dao.AddBook(book)
+// 	// 调用GetBooks函数查询一次数据库
+// 	GetBooks(w, r)
+// }
+
+// 删除图书
+func DeleteBook(w http.ResponseWriter, r *http.Request) {
+	// 获取要删除的图书id
+	bookID := r.FormValue("bookId")
+	// 调用删除图书函数
+	dao.DeleteBook(bookID)
+	// 调用GetBooks函数查询一次数据库
+	GetBooks(w, r)
+}
+
+// 去添加或更新图书页面
+func ToUpdateBookPage(w http.ResponseWriter, r *http.Request) {
+	// 获取要删除的图书id
+	bookID := r.FormValue("bookId")
+	// 调用获取图书函数
+	book, _ := dao.GetBookById(bookID)
+	if book.ID > 0 {
+		// 更新图书
+		// 解析模版
+		t := template.Must(template.ParseFiles("views/pages/manager/book_edit.html"))
+		// 执行
+		t.Execute(w, book)
+	} else {
+		// 添加图书
+		// 解析模版
+		t := template.Must(template.ParseFiles("views/pages/manager/book_edit.html"))
+		// 执行
+		t.Execute(w, "")
+	}
+
+	// 调用GetBooks函数查询一次数据库
+	GetBooks(w, r)
+}
+
+// 添加或更新图书
+func UpdateOrAddBook(w http.ResponseWriter, r *http.Request) {
 	// 获取图书信息
+	ibook := r.PostFormValue("bookId")
 	title := r.PostFormValue("title")
 	author := r.PostFormValue("author")
 	price := r.PostFormValue("price")
 	sales := r.PostFormValue("sales")
 	stock := r.PostFormValue("stock")
 	// 把价格、销量和库存进行转换
+	ibookID, _ := strconv.ParseInt(ibook, 10, 0)
 	fPrice, _ := strconv.ParseFloat(price, 64)
 	iSales, _ := strconv.ParseInt(sales, 10, 0)
 	iStock, _ := strconv.ParseInt(stock, 10, 0)
 	// 创建Book
 	book := &model.Book{
+		ID:      int(ibookID),
 		Title:   title,
 		Author:  author,
 		Price:   fPrice,
@@ -39,8 +103,14 @@ func AddBook(w http.ResponseWriter, r *http.Request) {
 		Stock:   int(iStock),
 		ImgPath: "/static/img/default.jpg",
 	}
-	// 调用添加图书函数
-	dao.AddBook(book)
+	if book.ID > 0 {
+		// 更新
+		// 调用更新图书函数
+		dao.UpdateBook(book)
+	} else {
+		// 添加
+		dao.AddBook(book)
+	}
 	// 调用GetBooks函数查询一次数据库
 	GetBooks(w, r)
 }

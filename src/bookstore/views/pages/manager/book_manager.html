@@ -22,18 +22,16 @@
 </script>
 </head>
 <body>
-	
 	<div id="header">
 			<img class="logo_img" alt="" src="/static/img/logo.gif" >
 			<span class="wel_word">图书管理系统</span>
 			<div>
 				<span>管理员</span>
-				<a href="/getPageBooks?PageNo=1">图书管理</a>
+				<a href="/getBooks">图书管理</a>
 				<a href="/getOrders">订单管理</a>
 				<a href="/main">返回商城</a>
 			</div>
 	</div>
-	
 	<div id="main">
 		<table>
 			<tr>
@@ -53,13 +51,6 @@
 				<td>{{.Stock}}</td>
 				<td><a href="/toUpdateBookPage?bookId={{.ID}}">修改</a></td>
 				<td><a id="{{.Title}}" class="deleteBook" href="/deleteBook?bookId={{.ID}}">删除</a></td>
-				<!-- <td>时间简史</td>
-				<td>20.00</td>
-				<td>霍金</td>
-				<td>200</td>
-				<td>400</td>
-				<td><a href="/pages/manager/book_edit.htmls">修改</a></td>
-				<td><a href="#">删除</a></td> -->
 			</tr>	
 		{{end}}
 			<tr>
@@ -69,7 +60,7 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td><a href="/pages/manager/book_edit.html">添加图书</a></td>
+				<td><a href="/toUpdateBookPage">添加图书</a></td>
 			</tr>	
 		</table>
 		<div id="page_nav">
