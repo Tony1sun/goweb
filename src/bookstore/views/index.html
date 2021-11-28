@@ -5,7 +5,7 @@
 <title>书城首页</title>
 <link type="text/css" rel="stylesheet" href="/static/css/style.css" >
 	<script src="/static/script/jquery-1.7.2.js"></script>
-	<script>
+	<!-- <script>
 		$(function (){
 			//绑定单击事件
 			$(".AddBook2Cart").click(function (){
@@ -22,14 +22,14 @@
 				});
 			});
 		});
-	</script>
+	</script> -->
 </head>
 <body>
 	
 	<div id="header">
 			<img class="logo_img" alt="" src="/static/img/logo.gif" >
 			<span class="wel_word">网上书城</span>
-			{{if .IsLogin}}
+			<!-- {{if .IsLogin}}
 			<div>
 				<span>欢迎<span class="um_span">{{.Username}}</span>光临尚硅谷书城</span>
 				<a href="/getCartInfo">购物车</a>
@@ -38,16 +38,16 @@
 				<a href="/main">返回主页</a>
 				<a href="/pages/manager/manager.html">后台管理</a>
 			</div>
-			{{else}}
+			{{else}} -->
 			<div>
 				<a href="/toLogin">登录</a> |
 				<a href="/pages/user/regist.html">注册</a> &nbsp;&nbsp;
 				<a href="/pages/manager/manager.html">后台管理</a>
 			</div>
-			{{end}}
+			<!-- {{end}} -->
 	</div>
 	
-	<div id="main">
+	<!-- <div id="main">
 		<div id="book">
 			<div class="book_cond">
 				<form action="/queryPrice" method="post">
@@ -60,7 +60,7 @@
 					<br>
 					<span style="color: deepskyblue" id="bookMsg"></span></span>
 				</div>
-			</div>
+			</div> -->
 
 		{{range .Books}}
 			<div class="b_list">
