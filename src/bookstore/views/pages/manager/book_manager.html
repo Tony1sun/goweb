@@ -27,7 +27,7 @@
 			<span class="wel_word">图书管理系统</span>
 			<div>
 				<span>管理员</span>
-				<a href="/getBooks">图书管理</a>
+				<a href="/getPageBooks">图书管理</a>
 				<a href="/getOrders">订单管理</a>
 				<a href="/main">返回商城</a>
 			</div>
@@ -42,7 +42,7 @@
 				<td>库存</td>
 				<td colspan="2">操作</td>
 			</tr>	
-		{{range .}}
+		{{range .Books}}
 			<tr>
 				<td>{{.Title}}</td>
 				<td>{{.Price}}</td>
@@ -65,15 +65,15 @@
 		</table>
 		<div id="page_nav">
 			{{if .IsHasPrev}}
-				<a href="/getPageBooks?PageNo=1">首页</a>
-				<a href="/getPageBooks?PageNo={{.GetPrevPageNo}}">上一页</a>
+				<a href="/getPageBooks?pageNo=1">首页</a>
+				<a href="/getPageBooks?pageNo={{.GetPrevPageNo}}">上一页</a>
 			{{end}}	
-				当前是第{{.IndexPage}}页，共<span id="totalPages">{{.Pages}} </span>页，共{{.Count}}条记录
+				当前是第{{.PageNo}}页，共<span id="totalPages">{{.TotalPageNo}} </span>页，共{{.TotalRecord}}条记录
 			{{if .IsHasNext}}	
-				<a href="/getPageBooks?PageNo={{.GetNextPageNo}}">下一页</a>
-				<a href="/getPageBooks?PageNo={{.Pages}}">末页</a>
+				<a href="/getPageBooks?pageNo={{.GetNextPageNo}}">下一页</a>
+				<a href="/getPageBooks?pageNo={{.TotalPageNo}}">末页</a>
 			{{end}}	
-				 到第<input value="{{.IndexPage}}" name="pn" id="pn_input"/>页
+				 到第<input value="{{.PageNo}}" name="pn" id="pn_input"/>页
 				<input type="button" value="确定" id="sub">
 				<script>
 					//给确定按钮绑定单击事件
@@ -85,7 +85,7 @@
 							alert("输入页码有误！");
 							return false;
 						}else {
-							location = "/getPageBooks?PageNo=" + pageNo
+							location = "/getPageBooks?pageNo=" + pageNo
 						}
 					});
 				</script>

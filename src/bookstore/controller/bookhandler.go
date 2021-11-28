@@ -9,14 +9,14 @@ import (
 )
 
 // 获取所有图书
-func GetBooks(w http.ResponseWriter, r *http.Request) {
-	// 获取图书
-	books, _ := dao.GetBooks()
-	// 解析
-	t := template.Must(template.ParseFiles("views/pages/manager/book_manager.html"))
-	// 执行
-	t.Execute(w, books)
-}
+// func GetBooks(w http.ResponseWriter, r *http.Request) {
+// 	// 获取图书
+// 	books, _ := dao.GetBooks()
+// 	// 解析
+// 	t := template.Must(template.ParseFiles("views/pages/manager/book_manager.html"))
+// 	// 执行
+// 	t.Execute(w, books)
+// }
 
 // 添加图书
 // func AddBook(w http.ResponseWriter, r *http.Request) {
@@ -45,6 +45,35 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 // 	GetBooks(w, r)
 // }
 
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	// 获取页码
+	pageNo := r.FormValue("pageNo")
+	if pageNo == "" {
+		pageNo = "1"
+	}
+	// 调用分页函数
+	page, _ := dao.GetPageBooks(pageNo)
+	// 解析模板
+	t := template.Must(template.ParseFiles("views/index.html"))
+	// 执行
+	t.Execute(w, page)
+}
+
+// 获取分页后的图书
+func GetPageBooks(w http.ResponseWriter, r *http.Request) {
+	// 获取页码
+	pageNo := r.FormValue("pageNo")
+	if pageNo == "" {
+		pageNo = "1"
+	}
+	// 调用分页函数
+	page, _ := dao.GetPageBooks(pageNo)
+	// 解析
+	t := template.Must(template.ParseFiles("views/pages/manager/book_manager.html"))
+	// 执行
+	t.Execute(w, page)
+}
+
 // 删除图书
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	// 获取要删除的图书id
@@ -52,7 +81,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	// 调用删除图书函数
 	dao.DeleteBook(bookID)
 	// 调用GetBooks函数查询一次数据库
-	GetBooks(w, r)
+	GetPageBooks(w, r)
 }
 
 // 去添加或更新图书页面
@@ -76,7 +105,7 @@ func ToUpdateBookPage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 调用GetBooks函数查询一次数据库
-	GetBooks(w, r)
+	GetPageBooks(w, r)
 }
 
 // 添加或更新图书
@@ -112,5 +141,5 @@ func UpdateOrAddBook(w http.ResponseWriter, r *http.Request) {
 		dao.AddBook(book)
 	}
 	// 调用GetBooks函数查询一次数据库
-	GetBooks(w, r)
+	GetPageBooks(w, r)
 }

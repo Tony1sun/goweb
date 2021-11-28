@@ -25,7 +25,7 @@
 	</script>
 </head>
 <body>
-
+	
 	<div id="header">
 			<img class="logo_img" alt="" src="/static/img/logo.gif" >
 			<span class="wel_word">网上书城</span>
@@ -62,7 +62,7 @@
 				</div>
 			</div>
 
-			{{range .Books}}
+		{{range .Books}}
 			<div class="b_list">
 				<div class="img_div">
 					<img class="book_img" alt="" src="{{.ImagePath}}" />
@@ -93,21 +93,21 @@
 					</div>
 				</div>
 			</div>
-			{{end}}
+		{{end}}
 
 		</div>
 
 		<div id="page_nav">
 			{{if .IsHasPrev}}
-				<a href="/main?PageNo=1">首页</a>
-				<a href="/main?PageNo={{.GetPrevPageNo}}">上一页</a>
+				<a href="/main?pageNo=1">首页</a>
+				<a href="/main?pageNo={{.GetPrevPageNo}}">上一页</a>
 			{{end}}
 			当前是第{{.IndexPage}}页，共<span id="totalPages">{{.Pages}} </span>页，共{{.Count}}条记录
 			{{if .IsHasNext}}
-				<a href="/main?PageNo={{.GetNextPageNo}}">下一页</a>
-				<a href="/main?PageNo={{.Pages}}">末页</a>
+				<a href="/main?pageNo={{.GetNextPageNo}}">下一页</a>
+				<a href="/main?pageNo={{.Pages}}">末页</a>
 			{{end}}
-			到第<input value="{{.IndexPage}}" name="pn" id="pn_input"/>页
+			到第<input value="{{.PageNo}}" name="pn" id="pn_input"/>页
 			<input type="button" value="确定" id="sub">
 			<script>
 				//给确定按钮绑定单击事件
@@ -119,7 +119,7 @@
 						alert("输入页码有误！");
 						return false;
 					}else {
-						location = "/main?PageNo=" + pageNo
+						location = "/main?pageNo=" + pageNo
 					}
 				});
 			</script>
