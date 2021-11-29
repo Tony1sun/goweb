@@ -5,24 +5,7 @@
 <title>书城首页</title>
 <link type="text/css" rel="stylesheet" href="/static/css/style.css" >
 	<script src="/static/script/jquery-1.7.2.js"></script>
-	<script>
-		$(function (){
-			//绑定单击事件
-			$(".AddBook2Cart").click(function (){
-				var bookId = $(this).attr("id");
-				var url = "/AddBook2Cart"
-				var param = {"bookId":bookId}
-				$.post(url,param,function (res){
-					if (res == "请先进行登录再操作！"){
-						alert(res+"点击确定进行登录。");
-						window.location.replace("/toLogin");
-					}else {
-						$("#bookMsg").text(res);
-					}
-				});
-			});
-		});
-	</script>
+	
 </head>
 <body>
 	
@@ -32,11 +15,24 @@
 			<div>
 				<a href="/toLogin">登录</a> |
 				<a href="/pages/user/regist.html">注册</a> &nbsp;&nbsp;
-				<a href="/getCartInfo">购物车</a>
 				<a href="/pages/manager/manager.html">后台管理</a>
 			</div>
 	</div>
-			{{range .Books}}
+	<div id="main">
+		<div id="book">
+			<div class="book_cond">
+				<form action="/queryPrice" method="post">
+				价格：<input type="text" name="min"> 元 - <input type="text" name="max"> 元
+				<button>查询</button>
+				</form>
+			</div>
+			<div style="text-align: center">
+				<div>
+					<br>
+					<span style="color: deepskyblue" id="bookMsg"></span></span>
+				</div>
+			</div>
+		{{range .Books}}
 			<div class="b_list">
 				<div class="img_div">
 					<img class="book_img" alt="" src="{{.ImgPath}}" />
@@ -68,7 +64,6 @@
 				</div>
 			</div>
 			{{end}}
-
 		</div>
 		<div id="page_nav">
 			{{if .IsHasPrev}}
@@ -99,6 +94,12 @@
 		</div>
 	
 	</div>
+
+	</div>
+
+			
+
+		
 	
 	<div id="bottom">
 		<span>

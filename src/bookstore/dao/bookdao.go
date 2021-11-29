@@ -81,7 +81,7 @@ func GetPageBooks(pageNo string) (*model.Page, error) {
 	row := utils.Db.QueryRow(sqlStr)
 	row.Scan(&totalRecord)
 	// 设置每页只显示4条记录
-	var pageSize int64 = 10
+	var pageSize int64 = 8
 	// 设置一个变量接收总页数
 	var totalPageNo int64
 	if totalRecord%pageSize == 0 {
