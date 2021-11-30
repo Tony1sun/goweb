@@ -65,8 +65,8 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 	// 获取页码
 	pageNo := r.FormValue("pageNo")
 	// 获取价格范围
-	minPrice := r.PostFormValue("min")
-	maxPrice := r.PostFormValue("max")
+	minPrice := r.FormValue("min")
+	maxPrice := r.FormValue("max")
 	if pageNo == "" {
 		pageNo = "1"
 	}
@@ -77,6 +77,9 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 	} else {
 		// 调用 获取带分页和价格的图书信息 函数
 		page, _ = dao.GetPageBooksByPrice(pageNo, minPrice, maxPrice)
+		// 将价格范围设置到page中
+		page.MinPrice = minPrice
+		page.MaxPrice = maxPrice
 	}
 	// 解析
 	t := template.Must(template.ParseFiles("views/index.html"))
