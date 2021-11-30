@@ -6,10 +6,11 @@ type Page struct {
 	PageSize    int64   //每页显示条数
 	TotalPageNo int64   // 总页数
 	TotalRecord int64   // 总记录数
+	MinPrice    string
+	MaxPrice    string
 }
 
-
-// 判断是否有上一页	
+// 判断是否有上一页
 func (p *Page) IsHasPrev() bool {
 	return p.PageNo > 1
 }

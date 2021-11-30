@@ -21,6 +21,8 @@ func main() {
 	// http.HandleFunc("/getBooks", controller.GetBooks)
 	// 获取分页后的图书
 	http.HandleFunc("/getPageBooks", controller.GetPageBooks)
+	http.HandleFunc("/getPageBooksByPrice", controller.GetPageBooksByPrice)
+
 	// 添加或更新图书
 	http.HandleFunc("/updateOraddBook", controller.UpdateOrAddBook)
 	// 删除图书

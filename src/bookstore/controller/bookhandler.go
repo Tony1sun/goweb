@@ -60,6 +60,30 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, page)
 }
 
+// 获取带分页和价格范围的图书
+func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
+	// 获取页码
+	pageNo := r.FormValue("pageNo")
+	// 获取价格范围
+	minPrice := r.PostFormValue("min")
+	maxPrice := r.PostFormValue("max")
+	if pageNo == "" {
+		pageNo = "1"
+	}
+	var page *model.Page
+	if minPrice == "" && maxPrice == "" {
+		// 调用分页函数
+		page, _ = dao.GetPageBooks(pageNo)
+	} else {
+		// 调用 获取带分页和价格的图书信息 函数
+		page, _ = dao.GetPageBooksByPrice(pageNo, minPrice, maxPrice)
+	}
+	// 解析
+	t := template.Must(template.ParseFiles("views/index.html"))
+	// 执行
+	t.Execute(w, page)
+}
+
 // 获取分页后的图书
 func GetPageBooks(w http.ResponseWriter, r *http.Request) {
 	// 获取页码
