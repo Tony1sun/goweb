@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-// 登录的函数
+// 登录
 func Login(w http.ResponseWriter, r *http.Request) {
 	// 获取用户名和密码
 	username := r.PostFormValue("username")
@@ -47,7 +47,25 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// 注册的函数
+// 注销
+func Logout(w http.ResponseWriter, r *http.Request) {
+	// 获取Cookie
+	cookie, _ := r.Cookie("user")
+	if cookie != nil {
+		// 获取cookie的value值
+		cookieValue := cookie.Value
+		// 删除数据库中与之对应的Session
+		dao.DeleteSession(cookieValue)
+		// 设置cookie失效
+		cookie.MaxAge = -1
+		// 将修改之后的cookie发送给浏览器
+		http.SetCookie(w, cookie)
+	}
+	// 去首页
+	GetPageBooksByPrice(w, r)
+}
+
+// 注册
 func Regist(w http.ResponseWriter, r *http.Request) {
 	// 获取用户名和密码
 	username := r.PostFormValue("username")

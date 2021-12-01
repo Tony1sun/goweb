@@ -13,6 +13,8 @@ func main() {
 
 	// 登录
 	http.HandleFunc("/login", controller.Login)
+	// 注销
+	http.HandleFunc("/logout", controller.Logout)
 	// 注册
 	http.HandleFunc("/regist", controller.Regist)
 	// 通过Ajax请求验证用户名是否可用
