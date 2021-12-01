@@ -81,6 +81,17 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 		page.MinPrice = minPrice
 		page.MaxPrice = maxPrice
 	}
+	// 获取cookie
+	cookie, _ := r.Cookie("user")
+	if cookie != nil {
+		// 获取cookie的value
+		cookieValue := cookie.Value
+		// 去数据库中根据cookieValue查询对应的Session
+		session, _ := dao.GetSession(cookieValue)
+		if session.UserID > 0 {
+			// 已经登录
+		}
+	}
 	// 解析
 	t := template.Must(template.ParseFiles("views/index.html"))
 	// 执行
