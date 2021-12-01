@@ -750,15 +750,12 @@ VALUES
   -- Table structure for sessions
   -- ----------------------------
   DROP TABLE IF EXISTS `sessions`;
-CREATE TABLE `sessions` (
-    `session_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-    `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-    `user_id` int(11) NOT NULL,
-    PRIMARY KEY (`session_id`) USING BTREE,
-    INDEX `user_id`(`user_id`) USING BTREE,
-    CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-  ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
--- ----------------------------
+CREATE TABLE sessions (
+    session_id varchar(100) PRIMARY KEY,
+    username varchar(100) NOT NULL,
+    user_id int(11) NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+  ) -- ----------------------------
   -- Records of sessions
   -- ----------------------------
 INSERT INTO

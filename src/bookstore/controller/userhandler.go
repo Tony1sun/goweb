@@ -2,6 +2,8 @@ package controller
 
 import (
 	"bookstore/dao"
+	"bookstore/model"
+	"bookstore/utils"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -17,10 +19,29 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("user", user)
 	if user.ID > 0 {
 		// 用户名和密码正确
-		t := template.Must(template.ParseFiles("views/pages/user/login_success.html"))
-		t.Execute(w, "")
-	} else {
 		// 用户名不正确
+		// 生成uuid作为Session的id
+		uuid := utils.CreateUUID()
+		// 创建session
+		sess := &model.Session{
+			SessionID: uuid,
+			UserName:  user.Username,
+			UserID:    user.ID,
+		}
+		// 将Session保持到数据库
+		dao.AddSession(sess)
+		// 创建Cookie， 与Session关联
+		cookie := http.Cookie{
+			Name:     "user",
+			Value:    uuid,
+			HttpOnly: true,
+		}
+		// 将cookie发送给浏览器
+		http.SetCookie(w, &cookie)
+		t := template.Must(template.ParseFiles("views/pages/user/login_success.html"))
+		t.Execute(w, user)
+	} else {
+
 		t := template.Must(template.ParseFiles("views/pages/user/login.html"))
 		t.Execute(w, "登录失败，请检查输入的用户名和密码。")
 	}
