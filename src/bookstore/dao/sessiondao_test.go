@@ -27,6 +27,6 @@ func testDeleteSession(t *testing.T) {
 }
 
 func testGetSession(t *testing.T) {
-	sess, _ := GetSession("bab7a01d-c686-447b-52ac-2c00997a812e")
+	sess, _ := GetSession("fa70d500-2bfe-42d3-4ef0-08d34cfa6356")
 	fmt.Println("Session的信息是：", sess)
 }

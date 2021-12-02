@@ -9,7 +9,7 @@ type Page struct {
 	MinPrice    string
 	MaxPrice    string
 	IsLogin     bool
-	UserName    string
+	Username    string
 }
 
 // 判断是否有上一页

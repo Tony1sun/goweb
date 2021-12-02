@@ -30,7 +30,7 @@ func DeleteSession(sessID string) error {
 
 // 获取Session
 func GetSession(sessID string) (*model.Session, error) {
-	sqlStr := "select session_id,username, user_id from sessions where session_id = ?"
+	sqlStr := "select session_id,username,user_id from sessions where session_id = ?"
 	// 执行
 	inStmt, err := utils.Db.Prepare(sqlStr)
 	if err != nil {
@@ -48,7 +48,7 @@ func GetSession(sessID string) (*model.Session, error) {
 func IsLogin(r *http.Request) (bool, string) {
 	// 根据Cookie的name获取cookie
 	cookie, _ := r.Cookie("user")
-	if cookie == nil {
+	if cookie != nil {
 		// 已经登陆
 		// 获取Cookie的Value
 		cookieValue := cookie.Value
@@ -58,5 +58,6 @@ func IsLogin(r *http.Request) (bool, string) {
 			return true, session.UserName
 		}
 	}
+	// 没有登录
 	return false, ""
 }

@@ -382,14 +382,13 @@ CREATE TABLE `cart_itmes` (
     `COUNT` int(11) NOT NULL,
     `amount` double(11, 2) NOT NULL,
     `book_id` int(11) NOT NULL,
-    `cart_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `cart_id` varchar(100) NOT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `book_id`(`book_id`) USING BTREE,
     INDEX `cart_id`(`cart_id`) USING BTREE,
     CONSTRAINT `cart_itmes_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
     CONSTRAINT `cart_itmes_ibfk_2` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-  ) ENGINE = InnoDB AUTO_INCREMENT = 77 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
--- ----------------------------
+  ) -- ----------------------------
   -- Records of cart_itmes
   -- ----------------------------
 INSERT INTO
@@ -426,16 +425,15 @@ VALUES
   -- Table structure for carts
   -- ----------------------------
   DROP TABLE IF EXISTS `carts`;
-CREATE TABLE `carts` (
-    `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-    `total_count` int(11) NOT NULL,
-    `total_amount` double(11, 2) NOT NULL,
-    `user_id` int(11) NOT NULL,
+CREATE TABLE carts (
+    id varchar(100),
+    total_count int(11) NOT NULL,
+    total_amount double(11, 2) NOT NULL,
+    user_id int(11) NOT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `user_id`(`user_id`) USING BTREE,
     CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-  ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
--- ----------------------------
+  ) -- ----------------------------
   -- Records of carts
   -- ----------------------------
 INSERT INTO

@@ -46,19 +46,19 @@ import (
 // }
 
 // 首页
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	// 获取页码
-	pageNo := r.FormValue("pageNo")
-	if pageNo == "" {
-		pageNo = "1"
-	}
-	// 调用分页函数
-	page, _ := dao.GetPageBooks(pageNo)
-	// 解析模板
-	t := template.Must(template.ParseFiles("views/index.html"))
-	// 执行
-	t.Execute(w, page)
-}
+// func IndexHandler(w http.ResponseWriter, r *http.Request) {
+// 	// 获取页码
+// 	pageNo := r.FormValue("pageNo")
+// 	if pageNo == "" {
+// 		pageNo = "1"
+// 	}
+// 	// 调用分页函数
+// 	page, _ := dao.GetPageBooks(pageNo)
+// 	// 解析模板
+// 	t := template.Must(template.ParseFiles("views/index.html"))
+// 	// 执行
+// 	t.Execute(w, page)
+// }
 
 // 获取带分页和价格范围的图书
 func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
@@ -86,9 +86,8 @@ func GetPageBooksByPrice(w http.ResponseWriter, r *http.Request) {
 	if flag {
 		// 已经登录,设置page中的IsLogin字段和Username的字段值
 		page.IsLogin = true
-		page.UserName = username
+		page.Username = username
 	}
-
 	// 解析
 	t := template.Must(template.ParseFiles("views/index.html"))
 	// 执行

@@ -9,7 +9,7 @@ func main() {
 	// 设置处理静态资源
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("views/static"))))
 	http.Handle("/pages/", http.StripPrefix("/pages/", http.FileServer(http.Dir("views/pages"))))
-	http.HandleFunc("/main", controller.IndexHandler)
+	http.HandleFunc("/main", controller.GetPageBooksByPrice)
 
 	// 登录
 	http.HandleFunc("/login", controller.Login)

@@ -11,39 +11,46 @@ import (
 
 // 登录
 func Login(w http.ResponseWriter, r *http.Request) {
-	// 获取用户名和密码
-	username := r.PostFormValue("username")
-	password := r.PostFormValue("password")
-	// 调用 userdao 中验证用户名和密码的方法
-	user, _ := dao.CheckUserNameAndPassword(username, password)
-	fmt.Println("user", user)
-	if user.ID > 0 {
-		// 用户名和密码正确
-		// 用户名不正确
-		// 生成uuid作为Session的id
-		uuid := utils.CreateUUID()
-		// 创建session
-		sess := &model.Session{
-			SessionID: uuid,
-			UserName:  user.Username,
-			UserID:    user.ID,
-		}
-		// 将Session保持到数据库
-		dao.AddSession(sess)
-		// 创建Cookie， 与Session关联
-		cookie := http.Cookie{
-			Name:     "user",
-			Value:    uuid,
-			HttpOnly: true,
-		}
-		// 将cookie发送给浏览器
-		http.SetCookie(w, &cookie)
-		t := template.Must(template.ParseFiles("views/pages/user/login_success.html"))
-		t.Execute(w, user)
+	// 判断是否已经登录
+	flag, _ := dao.IsLogin(r)
+	if flag {
+		// 已经登录
+		// 去首页
+		GetPageBooksByPrice(w, r)
 	} else {
-
-		t := template.Must(template.ParseFiles("views/pages/user/login.html"))
-		t.Execute(w, "登录失败，请检查输入的用户名和密码。")
+		// 获取用户名和密码
+		username := r.PostFormValue("username")
+		password := r.PostFormValue("password")
+		// 调用 userdao 中验证用户名和密码的方法
+		user, _ := dao.CheckUserNameAndPassword(username, password)
+		if user.ID > 0 {
+			// 用户名和密码正确
+			// 用户名不正确
+			// 生成uuid作为Session的id
+			uuid := utils.CreateUUID()
+			// 创建session
+			sess := &model.Session{
+				SessionID: uuid,
+				UserName:  user.Username,
+				UserID:    user.ID,
+			}
+			// 将Session保持到数据库
+			dao.AddSession(sess)
+			// 创建Cookie， 与Session关联
+			cookie := http.Cookie{
+				Name:     "user",
+				Value:    uuid,
+				HttpOnly: true,
+			}
+			// 将cookie发送给浏览器
+			http.SetCookie(w, &cookie)
+			t := template.Must(template.ParseFiles("views/pages/user/login_success.html"))
+			t.Execute(w, user)
+		} else {
+			// 用户名和密码不正确
+			t := template.Must(template.ParseFiles("views/pages/user/login.html"))
+			t.Execute(w, "登录失败，请检查输入的用户名和密码。")
+		}
 	}
 }
 
