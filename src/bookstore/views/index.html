@@ -4,7 +4,25 @@
 <meta charset="UTF-8">
 <title>书城首页</title>
 <link type="text/css" rel="stylesheet" href="/static/css/style.css" >
-	<script src="/static/script/jquery-1.7.2.js"></script>
+<script src="/static/script/jquery-1.7.2.js"></script>
+<script>
+	$(function (){
+		//绑定单击事件
+		$(".addBook2Cart").click(function (){
+			var bookId = $(this).attr("id");
+			var url = "/addBook2Cart"
+			var param = {"bookId":bookId}
+			$.post(url,param,function (res){
+				if (res == "请先进行登录再操作！"){
+					alert(res+"点击确定进行登录。");
+					window.location.replace("/toLogin");
+				}else {
+					$("#bookMsg").text(res);
+				}
+			});
+		});
+	});
+</script>
 	
 </head>
 <body>
@@ -68,7 +86,7 @@
 						<span class="sp2">{{.Stock}}</span>
 					</div>
 					<div class="book_add">
-						<button class="AddBook2Cart" id="{{.ID}}">加入购物车</button>
+						<button class="addBook2Cart" id="{{.ID}}">加入购物车</button>
 					</div>
 				</div>
 			</div>
