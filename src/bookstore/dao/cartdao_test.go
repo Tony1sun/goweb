@@ -8,7 +8,8 @@ import (
 
 func TestCart(t *testing.T) {
 	fmt.Println("测试购物车相关函数")
-	t.Run("测试添加购物车:", testAddCart)
+	// t.Run("测试添加购物车:", testAddCart)
+	t.Run("测试根据用户id获取对应购物车:", testGetCartItemsByUserID)
 }
 
 func testAddCart(t *testing.T) {
@@ -43,4 +44,9 @@ func testAddCart(t *testing.T) {
 		UserID:    1,
 	}
 	AddCart(cart)
+}
+
+func testGetCartItemsByUserID(t *testing.T) {
+	cart, _ := GetCartByUserID(1)
+	fmt.Println("用户的购物车:", cart)
 }
