@@ -8,18 +8,19 @@ import (
 
 func TestCart(t *testing.T) {
 	fmt.Println("测试购物车相关函数")
-	t.Run("测试添加购物车:", testAddCart)
+	// t.Run("测试添加购物车:", testAddCart)
+	t.Run("测试根据用户id获取对应购物车:", testGetCartItemsByUserID)
 }
 
 func testAddCart(t *testing.T) {
 	// 设置要买的第一本书
 	book := &model.Book{
-		ID:    3,
+		ID:    4,
 		Price: 30,
 	}
 	// 设置要买的第二本书
 	book2 := &model.Book{
-		ID:    4,
+		ID:    5,
 		Price: 27,
 	}
 	var cartItems []*model.CartItem
@@ -43,4 +44,9 @@ func testAddCart(t *testing.T) {
 		UserID:    1,
 	}
 	AddCart(cart)
+}
+
+func testGetCartItemsByUserID(t *testing.T) {
+	cart, _ := GetCartByUserID(1)
+	fmt.Println("用户的购物车:", cart)
 }
