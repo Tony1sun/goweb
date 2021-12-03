@@ -24,7 +24,7 @@ func (c *Cart) GetTotalAmount() float64 {
 	// 遍历购物车中的购物项切片
 	var totalAmount float64
 	for _, v := range c.CartItems {
-		totalAmount = totalAmount + v.Amount
+		totalAmount = totalAmount + v.GetAmount()
 	}
 	return totalAmount
 }
