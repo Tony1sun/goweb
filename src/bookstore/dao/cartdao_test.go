@@ -14,12 +14,12 @@ func TestCart(t *testing.T) {
 func testAddCart(t *testing.T) {
 	// 设置要买的第一本书
 	book := &model.Book{
-		ID:    3,
+		ID:    4,
 		Price: 30,
 	}
 	// 设置要买的第二本书
 	book2 := &model.Book{
-		ID:    4,
+		ID:    5,
 		Price: 27,
 	}
 	var cartItems []*model.CartItem
