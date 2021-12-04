@@ -28,13 +28,13 @@ func testAddCart(t *testing.T) {
 	cartitem := &model.CartItem{
 		Book:   book,
 		Count:  10,
-		CartId: "66668888",
+		CartID: "66668888",
 	}
 	cartItems = append(cartItems, cartitem)
 	cartitem2 := &model.CartItem{
 		Book:   book2,
 		Count:  10,
-		CartId: "66668888",
+		CartID: "66668888",
 	}
 	cartItems = append(cartItems, cartitem2)
 	// 创建购物车
@@ -47,6 +47,6 @@ func testAddCart(t *testing.T) {
 }
 
 func testGetCartItemsByUserID(t *testing.T) {
-	cart, _ := GetCartByUserID(1)
+	cart, _ := GetCartByUserID(2)
 	fmt.Println("用户的购物车:", cart)
 }

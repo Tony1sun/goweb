@@ -9,7 +9,7 @@ import (
 func AddCartItem(c *model.CartItem) error {
 	sqlStr := "insert into cart_items(count,amount,book_id,cart_id) values (?,?,?,?)"
 	// 执行
-	_, err := utils.Db.Exec(sqlStr, c.Count, c.GetAmount(), c.Book.ID, c.CartId)
+	_, err := utils.Db.Exec(sqlStr, c.Count, c.GetAmount(), c.Book.ID, c.CartID)
 	if err != nil {
 		return err
 	}
@@ -23,7 +23,7 @@ func GetCartItemsByBookID(bookID string, cartID string) (*model.CartItem, error)
 	row := utils.Db.QueryRow(sqlStr, bookID, cartID)
 	// 创建cartItem
 	cartItem := &model.CartItem{}
-	err := row.Scan(&cartItem.CartItemId, &cartItem.Count, &cartItem.Amount, &cartItem.CartId)
+	err := row.Scan(&cartItem.CartItemId, &cartItem.Count, &cartItem.Amount, &cartItem.CartID)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func GetCartItemsByCartID(CartID string) ([]*model.CartItem, error) {
 	for rows.Next() {
 		// 创建cartItem
 		cartItem := &model.CartItem{}
-		err2 := rows.Scan(&cartItem.CartItemId, &cartItem.Count, &cartItem.Amount, &cartItem.CartId)
+		err2 := rows.Scan(&cartItem.CartItemId, &cartItem.Count, &cartItem.Amount, &cartItem.CartID)
 		if err2 != nil {
 			return nil, err2
 		}

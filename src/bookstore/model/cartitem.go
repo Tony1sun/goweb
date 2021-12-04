@@ -6,7 +6,7 @@ type CartItem struct {
 	Book       *Book   // 购物项中的图书信息
 	Count      int64   // 购物项中的图书数量
 	Amount     float64 // 购物项中的图书金额小计，通过计算得到
-	CartId     string  // 当前购物项属于哪一个购物车
+	CartID     string  // 当前购物项属于哪一个购物车
 }
 
 // 获取购物项中图书的金额小计，数量*图书价格
