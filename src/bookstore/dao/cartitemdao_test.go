@@ -13,7 +13,7 @@ func TestCartItems(t *testing.T) {
 
 // 根据book_id获取对应购物项
 func testGetCartItemByBookID(t *testing.T) {
-	cartItem, _ := GetCartItemsByBookID("4", "66668888")
+	cartItem, _ := GetCartItemsByBookIDAndCartID("4", "66668888")
 	fmt.Println("图书id=4的购物项信息是:", cartItem)
 }
 
