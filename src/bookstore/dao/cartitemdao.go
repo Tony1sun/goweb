@@ -16,9 +16,9 @@ func AddCartItem(c *model.CartItem) error {
 	return nil
 }
 
-// 根据book_id获取对应的购物项
+// 根据book_id和cart_id获取对应的购物项
 func GetCartItemsByBookIDAndCartID(bookID string, cartID string) (*model.CartItem, error) {
-	sqlStr := "select id,count,amount,cart_id from cart_items where book_id = ?"
+	sqlStr := "select id,count,amount,cart_id from cart_items where book_id = ? and cart_id = ?"
 	// 执行
 	row := utils.Db.QueryRow(sqlStr, bookID, cartID)
 	// 创建cartItem
@@ -27,7 +27,22 @@ func GetCartItemsByBookIDAndCartID(bookID string, cartID string) (*model.CartIte
 	if err != nil {
 		return nil, err
 	}
+	// 根据bookID获取图书信息
+	book, _ := GetBookById(bookID)
+	// 将book设置到购物项中
+	cartItem.Book = book
 	return cartItem, nil
+}
+
+// 更新图书id和购物车id以及图书数量更新购物项中图书的数量
+func UpdateBookCount(bookCount int64, bookID int, cartID string) error {
+	sqlStr := "update cart_items set count = ? where book_id = ? and cart_id = ?"
+	// 执行
+	_, err := utils.Db.Exec(sqlStr, bookCount, bookID, cartID)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // 根据cart_id获取购物车中所有的购物项

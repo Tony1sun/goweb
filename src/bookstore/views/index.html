@@ -7,18 +7,20 @@
 <script src="/static/script/jquery-1.7.2.js"></script>
 <script>
 	$(function (){
+		$("#show").hide();
 		//绑定单击事件
 		$(".addBook2Cart").click(function (){
 			var bookId = $(this).attr("id");
 			var url = "/addBook2Cart"
 			var param = {"bookId":bookId}
 			$.post(url,param,function (res){
-				if (res == "请先进行登录再操作！"){
-					alert(res+"点击确定进行登录。");
-					window.location.replace("/toLogin");
-				}else {
+				// if (res == "请先进行登录再操作！"){
+				// 	alert(res+"点击确定进行登录。");
+				// 	window.location.replace("/toLogin");
+				// }else {
+					$("#show").show();
 					$("#bookMsg").text(res);
-				}
+				// }
 			});
 		});
 	});
@@ -56,7 +58,7 @@
 			<div style="text-align: center">
 				<div>
 					<br>
-					<span style="color: deepskyblue" id="bookMsg"></span></span>
+					<span id="show">您刚刚将<span style="color: deepskyblue" id="bookMsg">v.Book.ID</span>加入到了购物车中!</span>
 				</div>
 			</div>
 		{{range .Books}}

@@ -26,7 +26,19 @@ func AddBook2Cart(w http.ResponseWriter, r *http.Request) {
 		cartItem, _ := dao.GetCartItemsByBookIDAndCartID(bookID, cart.CartID)
 		fmt.Println("根据图书id获取的购物项是:", cartItem)
 		if cartItem != nil {
-			// 购物车中的购物项已经有该图书，只需要将该图书所对应的购物项中的数量加一即可
+			// 购物车中的购物项已经有该图书，只需要将该图书所对应的购物项中的数量加1即可
+			// 1.获取购物车切片中的所有购物项
+			cts := cart.CartItems
+			// 2.遍历得到的每一个购物项
+			for _, v := range cts {
+				// 3.找到当前的购物项
+				if v.Book.ID == cartItem.Book.ID {
+					// 将购物项中的图书数量加1	
+					v.Count = v.Count + 1
+					// 更新数据库中该购物项的图书数量
+					dao.UpdateBookCount(v.Count, v.Book.ID,cart.CartID)
+				}
+			}
 		} else {
 			fmt.Println("当前购物车中还没有该图书对应的购物项")
 			// 购物车中的购物项还没有该图书，此时需要创建一个购物项并添加到数据库中
@@ -66,4 +78,5 @@ func AddBook2Cart(w http.ResponseWriter, r *http.Request) {
 		// 将购物车cart保存到数据库
 		dao.AddCart(cart)
 	}
+	w.Write([]byte(book.Title))
 }
