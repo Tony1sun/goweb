@@ -34,11 +34,11 @@ func GetCartItemsByBookIDAndCartID(bookID string, cartID string) (*model.CartIte
 	return cartItem, nil
 }
 
-// 更新图书id和购物车id以及图书数量更新购物项中图书的数量
-func UpdateBookCount(bookCount int64, bookID int, cartID string) error {
-	sqlStr := "update cart_items set count = ? where book_id = ? and cart_id = ?"
+// 更新购物项中的信息更新图书数量和金额小计
+func UpdateBookCount(cartItem *model.CartItem) error {
+	sqlStr := "update cart_items set count = ?, amount = ? where book_id = ? and cart_id = ?"
 	// 执行
-	_, err := utils.Db.Exec(sqlStr, bookCount, bookID, cartID)
+	_, err := utils.Db.Exec(sqlStr, cartItem.Count, cartItem.GetAmount(), cartItem.Book.ID, cartItem.CartID)
 	if err != nil {
 		return err
 	}

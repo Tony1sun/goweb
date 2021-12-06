@@ -7,20 +7,17 @@
 <script src="/static/script/jquery-1.7.2.js"></script>
 <script>
 	$(function (){
-		$("#show").hide();
 		//绑定单击事件
 		$(".addBook2Cart").click(function (){
 			var bookId = $(this).attr("id");
 			var url = "/addBook2Cart"
 			var param = {"bookId":bookId}
 			$.post(url,param,function (res){
-				// if (res == "请先进行登录再操作！"){
-				// 	alert(res+"点击确定进行登录。");
-				// 	window.location.replace("/toLogin");
-				// }else {
-					$("#show").show();
+				if (res == "请先登录！"){
+					location = "/pages/user/login.html"
+				}else {
 					$("#bookMsg").text(res);
-				// }
+				}
 			});
 		});
 	});
@@ -35,7 +32,7 @@
 			{{if .IsLogin}}
 			<div>
 				<span>欢迎<span class="um_span">{{.Username}}</span>光临尚硅谷书城</span>
-				<a href="/pages/cart/cart.html">购物车</a>
+				<a href="/getCartInfo">购物车</a>
 				<a href="/logout">注销</a>&nbsp;&nbsp;
 				<a href="/main">返回</a>
 			</div>
@@ -58,7 +55,7 @@
 			<div style="text-align: center">
 				<div>
 					<br>
-					<span id="show">您刚刚将<span style="color: deepskyblue" id="bookMsg">v.Book.ID</span>加入到了购物车中!</span>
+					<span style="color: deepskyblue" id="bookMsg"></span></span>
 				</div>
 			</div>
 		{{range .Books}}

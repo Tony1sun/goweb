@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"bookstore/model"
 	"fmt"
 	"testing"
 )
@@ -28,5 +29,15 @@ func testGetCartItemByCartID(t *testing.T) {
 
 // 更新图书id和购物车id以及图书数量更新购物项中图书的数量
 func testUpdateBookCount(t *testing.T) {
-	UpdateBookCount(20, 3, "66668888")
+	book2 := &model.Book{
+		ID:    5,
+		Price: 27,
+	}
+	cartItem := &model.CartItem{
+		Book:   book2,
+		Count:  1,
+		CartID: "3083085e-fe8a-4704-7d15-7fa35577167b",
+		Amount: 54,
+	}
+	UpdateBookCount(cartItem)
 }
