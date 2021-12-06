@@ -90,12 +90,19 @@ func GetCartInfo(w http.ResponseWriter, r *http.Request) {
 	userID := session.UserID
 	// 根据用户id从数据库获取对应的购物车
 	cart, _ := dao.GetCartByUserID(userID)
-	// 设置用户名
-	cart.UserName = session.UserName
-	// if cart != nil {
-	// 解析模板文件
-	t := template.Must(template.ParseFiles("views/pages/cart/cart.html"))
-	// 执行
-	t.Execute(w, cart)
-	// }
+	if cart != nil {
+		// 设置用户名
+		cart.UserName = session.UserName
+		// 解析模板文件
+		t := template.Must(template.ParseFiles("views/pages/cart/cart.html"))
+		// 执行
+		t.Execute(w, cart)
+	} else {
+		// 该用户还没有购物车
+		// 解析模板文件
+		// t := template.Must(template.ParseFiles("views/pages/cart/cart.html"))
+		// // 执行
+		// t.Execute(w, session)
+		http.Redirect(w, r, "/login", 302)
+	}
 }
