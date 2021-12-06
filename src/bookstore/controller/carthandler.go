@@ -92,10 +92,10 @@ func GetCartInfo(w http.ResponseWriter, r *http.Request) {
 	cart, _ := dao.GetCartByUserID(userID)
 	// 设置用户名
 	cart.UserName = session.UserName
-	if cart != nil {
-		// 解析模板文件
-		t := template.Must(template.ParseFiles("views/pages/cart/cart.html"))
-		// 执行
-		t.Execute(w, cart)
-	}
+	// if cart != nil {
+	// 解析模板文件
+	t := template.Must(template.ParseFiles("views/pages/cart/cart.html"))
+	// 执行
+	t.Execute(w, cart)
+	// }
 }
