@@ -9,7 +9,8 @@ import (
 func TestCart(t *testing.T) {
 	fmt.Println("测试购物车相关函数")
 	// t.Run("测试添加购物车:", testAddCart)
-	t.Run("测试根据用户id获取对应购物车:", testGetCartItemsByUserID)
+	// t.Run("测试根据用户id获取对应购物车:", testGetCartItemsByUserID)
+	t.Run("测试根据购物车id删除购物车:", testDeleteCartByCartID)
 }
 
 func testAddCart(t *testing.T) {
@@ -49,4 +50,8 @@ func testAddCart(t *testing.T) {
 func testGetCartItemsByUserID(t *testing.T) {
 	cart, _ := GetCartByUserID(2)
 	fmt.Println("用户的购物车:", cart)
+}
+
+func testDeleteCartByCartID(t *testing.T) {
+	DeleteCartByCartID("29514ca0-a885-4438-5bb8-e1b1e731c4f4")
 }
