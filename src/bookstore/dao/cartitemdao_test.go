@@ -10,7 +10,8 @@ func TestCartItems(t *testing.T) {
 	fmt.Println("测试购物车相关函数")
 	// t.Run("根据book_id对应购物项:", testGetCartItemByBookID)
 	// t.Run("根据cart_id对应购物项:", testGetCartItemByCartID)
-	t.Run("更新图书id和购物车id以及图书数量更新购物项中图书的数量:", testUpdateBookCount)
+	// t.Run("更新图书id和购物车id以及图书数量更新购物项中图书的数量:", testUpdateBookCount)
+	t.Run("根据购物项id删除购物项:", testDeleteCartItemByID)
 }
 
 // 根据book_id获取对应购物项
@@ -40,4 +41,8 @@ func testUpdateBookCount(t *testing.T) {
 		Amount: 54,
 	}
 	UpdateBookCount(cartItem)
+}
+
+func testDeleteCartItemByID(t *testing.T) {
+	DeleteCartItemByID("76")
 }

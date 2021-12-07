@@ -6,6 +6,7 @@ import (
 	"bookstore/utils"
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 // 添加图书到购物车
@@ -113,5 +114,36 @@ func DeleteCart(w http.ResponseWriter, r *http.Request) {
 	// 清空购物车
 	dao.DeleteCartByCartID(cartID)
 	// 再次查询购物车信息
+	GetCartInfo(w, r)
+}
+
+// 删除购物项
+func DeleteCartItem(w http.ResponseWriter, r *http.Request) {
+	// 获取要删除的购物项id
+	cartItemID := r.FormValue("cartItemId")
+	// 将购物项id转换为int64
+	iCartItemID, _ := strconv.ParseInt(cartItemID, 10, 64)
+	// 获取session
+	_, session := dao.IsLogin(r)
+	// 获取用户id
+	userID := session.UserID
+	// 获取该用户的购物车
+	cart, _ := dao.GetCartByUserID(userID)
+	// 获取购物车中所有的购物项
+	cartItems := cart.CartItems
+	for k, v := range cartItems {
+		if v.CartItemId == iCartItemID {
+			// 找到要删除的购物
+			// 将当前购物项从切片中移除
+			cartItems = append(cartItems[:k], cartItems[k+1:]...)
+			// 将删除购物项之后的切片再次赋给购物车中的切片
+			cart.CartItems = cartItems
+			// 将当前购物项从数据库中移除
+			dao.DeleteCartItemByID(cartItemID)
+		}
+	}
+	// 更新购物车中图书的总数量和金额
+	dao.UpdateCart(cart)
+	// 获取购物车信息
 	GetCartInfo(w, r)
 }

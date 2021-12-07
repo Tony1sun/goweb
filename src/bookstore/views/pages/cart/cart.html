@@ -84,7 +84,7 @@
 				<td>{{.Count}}</td>
 				<td>{{.Book.Price}}</td>
 				<td>{{.Amount}}</td>
-				<td><a href="/#">删除</a></td>
+				<td><a id="{{.Book.Title}}" class="deleteCartItem" href="/deleteCartItem?cartItemId={{.CartItemId}}">删除</a></td>
 			</tr>
 		{{end}}
 		</table>
