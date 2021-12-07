@@ -85,24 +85,23 @@ func AddBook2Cart(w http.ResponseWriter, r *http.Request) {
 
 // 根据用户id获取购物车信息
 func GetCartInfo(w http.ResponseWriter, r *http.Request) {
-	_, session := dao.IsLogin(r)
-	// 获取用户id
-	userID := session.UserID
-	// 根据用户id从数据库获取对应的购物车
-	cart, _ := dao.GetCartByUserID(userID)
-	if cart != nil {
-		// 设置用户名
-		cart.UserName = session.UserName
+	islogin, session := dao.IsLogin(r)
+	if islogin {
+		// 获取用户id
+		userID := session.UserID
+		// 根据用户id从数据库获取对应的购物车
+		cart, _ := dao.GetCartByUserID(userID)
+		// 把cart加到session的cart中
+		session.Cart = cart
 		// 解析模板文件
 		t := template.Must(template.ParseFiles("views/pages/cart/cart.html"))
 		// 执行
-		t.Execute(w, cart)
+		t.Execute(w, session)
 	} else {
 		// 该用户还没有购物车
 		// 解析模板文件
-		// t := template.Must(template.ParseFiles("views/pages/cart/cart.html"))
-		// // 执行
-		// t.Execute(w, session)
-		http.Redirect(w, r, "/login", 302)
+		t := template.Must(template.ParseFiles("views/pages/cart/cart.html"))
+		// 执行
+		t.Execute(w, session)
 	}
 }
