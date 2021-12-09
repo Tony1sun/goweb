@@ -462,16 +462,15 @@ CREATE TABLE `order_items` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `COUNT` int(11) NOT NULL,
     `amount` double(11, 2) NOT NULL,
-    `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-    `author` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `title` varchar(100) NOT NULL,
+    `author` varchar(100) NOT NULL,
     `price` double(11, 2) NOT NULL,
-    `img_path` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-    `order_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `img_path` varchar(100) NOT NULL,
+    `order_id` varchar(100) NOT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `order_id`(`order_id`) USING BTREE,
-    CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-  ) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
--- ----------------------------
+    FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+  ) -- ----------------------------
   -- Records of order_items
   -- ----------------------------
 INSERT INTO
@@ -687,17 +686,14 @@ VALUES
   -- ----------------------------
   DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
-    `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-    `create_time` datetime(0) NOT NULL,
+    `id` varchar(100) PRIMARY KEY,
+    `create_time` DATETIME NOT NULL,
     `total_count` int(11) NOT NULL,
     `total_amount` double(11, 2) NOT NULL,
     `state` int(11) NOT NULL,
     `user_id` int(11) NULL DEFAULT NULL,
-    PRIMARY KEY (`id`) USING BTREE,
-    INDEX `user_id`(`user_id`) USING BTREE,
-    CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-  ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
--- ----------------------------
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  ) -- ----------------------------
   -- Records of orders
   -- ----------------------------
 INSERT INTO
