@@ -15,10 +15,12 @@ func TestOrder(t *testing.T) {
 func testAddorder(t *testing.T) {
 	// 生成订单号
 	orderID := "13811118888"
+	// 生成订单时间
+	timeStr := time.Now().Format("2006-01-02 15:04:05")
 	// 创建订单
 	order := &model.Order{
 		OrderID:     orderID,
-		CreateTime:  time.Now(),
+		CreateTime:  timeStr,
 		TotalCount:  2,
 		TotalAmount: 400,
 		State:       0,
