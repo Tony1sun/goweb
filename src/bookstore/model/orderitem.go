@@ -1,5 +1,6 @@
 package model
 
+// 订单项
 type OrderItem struct {
 	OrderItemID int64   // 订单项id
 	Count       int64   // 订单项图书的数量

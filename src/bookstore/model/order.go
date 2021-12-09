@@ -1,5 +1,6 @@
 package model
 
+// 订单
 type Order struct {
 	OrderID     string  // 订单号
 	CreateTime  string  // 生成订单的时间
