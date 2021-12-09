@@ -50,3 +50,10 @@ func testAddorder(t *testing.T) {
 	AddOrderItem(orderItem)
 	AddOrderItem(orderItem2)
 }
+
+func testGetOrders(t *testing.T) {
+	orders, _ := GetOrders()
+	for _, v := range orders {
+		fmt.Println("订单信息是:", v)
+	}
+}
