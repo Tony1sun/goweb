@@ -10,7 +10,7 @@
 			<img class="logo_img" alt="" src="/static/img/logo.gif" >
 			<span class="wel_word">订单管理系统</span>
 			<div>
-				<a href="/getPageBooks?PageNo=1">图书管理</a>
+				<a href="/getPageBooks">图书管理</a>
 				<a href="/getOrders">订单管理</a>
 				<a href="/main">返回商城</a>
 			</div>
@@ -33,18 +33,11 @@
 				<td>{{.TotalCount}}</td>
 				<td>{{.TotalAmount}}</td>
 				<td><a href="/getOrderInfo?orderId={{.OrderID}}">查看详情</a></td>
-				<td class="state">
-					{{if .NoSend}}
-					<a href="/sendOrder?orderId={{.OrderID}}">发货</a>
-					{{end}}
-					{{if .SendComplate}}
-					等待确认收货
-					{{end}}	
-					{{if .Complate}}
-					交易完成
-					{{end}}
-					{{if .Cancel}}
-						订单取消
+				<td>
+					{{if .State}}
+						等待确认收货
+					{{else}}	
+					<a href="">发货</a>
 					{{end}}
 				</td>
 			</tr>

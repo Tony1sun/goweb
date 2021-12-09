@@ -65,3 +65,25 @@ func Checkout(w http.ResponseWriter, r *http.Request) {
 	// 执行
 	t.Execute(w, session)
 }
+
+// 获取所有订单
+func GetOrders(w http.ResponseWriter, r *http.Request) {
+	// 获取所有订单
+	orders, _ := dao.GetOrders()
+	// 解析
+	t := template.Must(template.ParseFiles("views/pages/order/order_manager.html"))
+	// 执行
+	t.Execute(w, orders)
+}
+
+// 获取订单订单对应的订单项
+func GetOrderInfo(w http.ResponseWriter, r *http.Request) {
+	// 获取订单号
+	orderID := r.FormValue("orderId")
+	// 根据订单号获取所有订单项
+	orderItems, _ := dao.GetOrderItemsByOrderID(orderID)
+	// 解析模版
+	t := template.Must(template.ParseFiles("views/pages/order/order_info.html"))
+	// 执行
+	t.Execute(w, orderItems)
+}

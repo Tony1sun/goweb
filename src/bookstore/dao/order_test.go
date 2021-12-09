@@ -9,7 +9,9 @@ import (
 
 func TestOrder(t *testing.T) {
 	fmt.Println("测试订单相关函数")
-	t.Run("测试添加订单和订单项", testAddorder)
+	// t.Run("测试添加订单和订单项", testAddorder)
+	// t.Run("测试获取订单信息", testGetOrders)
+	t.Run("测试获取所有订单项目", testGetOrderItems)
 }
 
 func testAddorder(t *testing.T) {
@@ -55,5 +57,12 @@ func testGetOrders(t *testing.T) {
 	orders, _ := GetOrders()
 	for _, v := range orders {
 		fmt.Println("订单信息是:", v)
+	}
+}
+
+func testGetOrderItems(t *testing.T) {
+	orderItems, _ := GetOrderItemsByOrderID("c6701c00-232f-450f-5d6e-0d80737961f4")
+	for _, v := range orderItems {
+		fmt.Println("订单项信息是:", v)
 	}
 }
