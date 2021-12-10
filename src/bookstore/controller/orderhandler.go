@@ -59,7 +59,7 @@ func Checkout(w http.ResponseWriter, r *http.Request) {
 	// 清空购物车
 	dao.DeleteCartByCartID(cart.CartID)
 	// 将订单号设置到session中
-	session.OrderID = orderID
+	session.Order = order
 	// 解析
 	t := template.Must(template.ParseFiles("views/pages/cart/checkout.html"))
 	// 执行
@@ -86,4 +86,25 @@ func GetOrderInfo(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("views/pages/order/order_info.html"))
 	// 执行
 	t.Execute(w, orderItems)
+}
+
+// 获取我的订单
+func GetMyOrders(w http.ResponseWriter, r *http.Request) {
+	// 获取session
+	_, session := dao.IsLogin(r)
+	// 获取用户id
+	userID := session.UserID
+	// 获取用户的所有订单
+	orders, _ := dao.GetMyOrders(userID)
+	// 将订单设置到session中
+	session.Orders = orders
+	// 解析
+	t := template.Must(template.ParseFiles("views/pages/order/order.html"))
+	t.Execute(w, session)
+}
+
+// 发货
+func SendOrder(w http.ResponseWriter, r *http.Request) {
+	// 获取要发货的订单号
+	orderID := r.FormValue("orderId")
 }

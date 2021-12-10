@@ -17,8 +17,8 @@
 			<img class="logo_img" alt="" src="/static/img/logo.gif" >
 			<span class="wel_word">我的订单</span>
 			<div>
-				<span>欢迎<span class="um_span">{{.Username}}</span>光临尚硅谷书城</span>
-				<a href="/getMyOrder">我的订单</a>
+				<span>欢迎<span class="um_span">{{.UserName}}</span>光临尚硅谷书城</span>
+				<a href="/getMyOrders">我的订单</a>
 				<a href="/logout">注销</a>&nbsp;&nbsp;
 				<a href="/main">返回</a>
 			</div>
@@ -42,18 +42,10 @@
 				<td>{{.TotalAmount}}</td>
 				<td><a href="/getOrderInfo?orderId={{.OrderID}}">查看详情</a></td>
 				<td class="state">
-					{{if .SendComplate}}
-						<a href="/takeOrder?orderId={{.OrderID}}&state=2">确认收货</a><br>
-						<a href="/takeOrder?orderId={{.OrderID}}&state=-1">退款退货</a>
-					{{end}}
-					{{if .NoSend}}
-						等待发货
-					{{end}}	
-					{{if .Complate}}
-						交易完成
-					{{end}}
-					{{if .Cancel}}
-						订单取消
+					{{if .State}}
+						<a href="">确认收货</a>
+					{{else}}	
+					<a href="">发货</a>
 					{{end}}
 				</td>
 			</tr>

@@ -32,3 +32,30 @@ func GetOrders() ([]*model.Order, error) {
 	}
 	return orders, nil
 }
+
+// 获取我的订单
+func GetMyOrders(userID int) ([]*model.Order, error) {
+	sql := "select id, create_time, total_count, total_amount, state, user_id from orders where user_id = ?"
+	rows, err := utils.Db.Query(sql, userID)
+	if err != nil {
+		return nil, err
+	}
+	var orders []*model.Order
+	for rows.Next() {
+		order := &model.Order{}
+		rows.Scan(&order.OrderID, &order.CreateTime, &order.TotalCount, &order.TotalAmount, &order.State, &order.UserID)
+		orders = append(orders, order)
+	}
+	return orders, nil
+}
+
+// 更新订单状态，即发货和收货
+func UpdateOrderState(orderID string, state int64) error {
+	sql := "update orders set state = ? where id = ?"
+	// 执行
+	_, err := utils.Db.Exec(sql, state, orderID)
+	if err != nil {
+		return err
+	}
+	return err
+}

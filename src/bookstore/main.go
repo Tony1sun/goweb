@@ -49,6 +49,10 @@ func main() {
 	http.HandleFunc("/getOrders", controller.GetOrders)
 	// 获取订单详情，即订单对应的所有订单项
 	http.HandleFunc("/getOrderInfo", controller.GetOrderInfo)
+	// 获取我的订单
+	http.HandleFunc("/getMyOrders", controller.GetMyOrders)
+	// 发货S
+	http.HandleFunc("/sendOrder", controller.SendOrder)
 
 	http.ListenAndServe(":8080", nil)
 }
