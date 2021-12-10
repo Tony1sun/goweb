@@ -107,4 +107,19 @@ func GetMyOrders(w http.ResponseWriter, r *http.Request) {
 func SendOrder(w http.ResponseWriter, r *http.Request) {
 	// 获取要发货的订单号
 	orderID := r.FormValue("orderId")
+	// 更新订单状态
+	dao.UpdateOrderState(orderID, 1)
+	// 查询一下所有订单
+	GetOrders(w, r)
+}
+
+// 收货
+func TakeOrder(w http.ResponseWriter, r *http.Request) {
+	// 获取
+	// 获取要收货的订单号
+	orderID := r.FormValue("orderId")
+	// 更新订单状态
+	dao.UpdateOrderState(orderID, 2)
+	// 查询我的订单
+	GetMyOrders(w, r)
 }

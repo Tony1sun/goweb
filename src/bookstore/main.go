@@ -53,6 +53,8 @@ func main() {
 	http.HandleFunc("/getMyOrders", controller.GetMyOrders)
 	// 发货S
 	http.HandleFunc("/sendOrder", controller.SendOrder)
+	// 确认收货
+	http.HandleFunc("/takeOrder", controller.TakeOrder)
 
 	http.ListenAndServe(":8080", nil)
 }
