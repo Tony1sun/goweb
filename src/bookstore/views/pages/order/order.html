@@ -46,7 +46,7 @@
 						<a href="/takeOrder?orderId={{.OrderID}}">确认收货</a>
 					{{end}}
 					{{if .NoSend}}
-						等待发货
+						<a href="/sendOrder?orderId={{.OrderID}}">发货</a>
 					{{end}}
 					{{if .Complete}}
 						交易完成
